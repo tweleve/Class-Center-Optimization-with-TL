@@ -1,0 +1,47 @@
+
+
+NAME: contrastive
+
+MODEL:
+  BACKBONE:
+    NAME: resnet50
+#    NAME: bninception
+  HEAD:
+    DIM: 512
+    IN_CHANNELS: 2048
+
+LOSSES:
+  NAME: 'contrastive_loss'
+#  NAME: 'ms_loss'
+
+INPUT:
+  MODE: RGB
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+
+SOLVER:
+  MAX_ITERS: 10000
+  STEPS: 2
+  OPTIMIZER_NAME: Adam
+  BASE_LR: 0.0001 
+  WEIGHT_DECAY: 0.0005
+  
+DATA:
+  TRAIN_IMG_SOURCE: ../datasets/CUB_200_2011/train.txt
+  TEST_IMG_SOURCE: ../datasets/CUB_200_2011/test.txt
+  TRAIN_BATCHSIZE: 64
+  TEST_BATCHSIZE: 64
+  NUM_WORKERS: 8
+  NUM_INSTANCES: 4
+
+VALIDATION:
+  VERBOSE: 100
+
+XBM:
+#  ENABLE: False
+  ENABLE: True
+#  WEIGHT: 0.1
+  WEIGHT: 1.0
+  SIZE: 5000
+  START_ITERATION: 100

@@ -1,0 +1,59 @@
+# Copyright (c) Malong Technologies Co., Ltd.
+# All rights reserved.
+#
+# Contact: github@malong.com
+#
+# This source code is licensed under the LICENSE file in the root directory of this source tree.
+
+NAME: contrastive
+#NAME: ms_loss
+
+MODEL:
+  BACKBONE:
+#    NAME: bninception
+    NAME: resnet50
+  HEAD:
+    DIM: 512
+    IN_CHANNELS: 2048
+
+LOSSES:
+  NAME: 'contrastive_loss'
+#  NAME: 'ms_loss'
+
+INPUT:
+  MODE: RGB
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+
+SOLVER:
+  MAX_ITERS: 10000
+  STEPS: 2
+  OPTIMIZER_NAME: Adam
+  BASE_LR: 0.0001 
+  WEIGHT_DECAY: 0.0005
+  
+DATA:
+#  TRAIN_IMG_SOURCE: ../datasets/PatternNet-38/train_50.txt
+  TRAIN_IMG_SOURCE: ../datasets/PatternNet-38/train_100.txt
+#  TEST_IMG_SOURCE: ../datasets/PatternNet-38/test_50.txt
+  TEST_IMG_SOURCE: ../datasets/PatternNet-38/test_100.txt
+  TRAIN_BATCHSIZE: 32
+  TEST_BATCHSIZE: 32
+  NUM_WORKERS: 16
+  NUM_INSTANCES: 4
+
+VALIDATION:
+  VERBOSE: 100
+
+XBM:
+  ENABLE: True
+#  ENABLE: False
+  WEIGHT: 1.0
+  SIZE: 2000
+  START_ITERATION: 100
+
+BF:
+  ADD_BF: True
+#  ADD_BF: False
+
